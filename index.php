@@ -1,10 +1,12 @@
 <?php require __DIR__ . '/views/header.php'; ?>
-<?php if (isset($_SESSION['user'])) {
-    echo "Welcome, " . $_SESSION['user']['name'];
-} ?>
-<article>
-    <h1><?php echo $config['title']; ?></h1>
-    <p>This is the home page.</p>
-</article>
+
+<?php if (!isLoggedIn()) : ?>
+    <h1>Create account</h1>
+<?php else : ?>
+    <article>
+        <h1>Logged in</h1>
+        <p>See the posts below</p>
+    </article>
+<?php endif; ?>
 
 <?php require __DIR__ . '/views/footer.php'; ?>
