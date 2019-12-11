@@ -1,3 +1,13 @@
+p {
+    font-size: 18px;
+}
+
+button {
+    border: 1px solid black;
+    height: 2em;
+    font-size: 14px;
+}
+
 nav {
     background-color: antiquewhite;
     width: 100%;
@@ -15,4 +25,15 @@ nav {
     margin: 0;
     width: 100%;
     padding: 0 10px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section input {
+    border: 1px solid black;
+    width: 50%;
+    height: 2em;
 }
