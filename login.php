@@ -4,19 +4,19 @@
     <h1>Login</h1>
 
     <form action="app/users/login.php" method="post">
-        <div class="form-group">
+        <div>
             <label for="email">Email</label>
-            <input class="form-control" type="email" name="email" placeholder="francis@darjeeling.com" required>
-            <small class="form-text text-muted">Please provide the your email address.</small>
-        </div><!-- /form-group -->
+            <input type="email" name="email" placeholder="example@mail.com" required>
+            <small>Please provide the your email address.</small>
+        </div>
 
-        <div class="form-group">
+        <div>
             <label for="password">Password</label>
-            <input class="form-control" type="password" name="password" required>
-            <small class="form-text text-muted">Please provide the your password (passphrase).</small>
-        </div><!-- /form-group -->
+            <input type="password" name="password" required>
+            <small>Please provide the your password (passphrase).</small>
+        </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit">Login</button>
     </form>
 </article>
 
