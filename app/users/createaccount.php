@@ -41,7 +41,13 @@ if (
         ':password' => password_hash($password, PASSWORD_DEFAULT)
     ]);
 
-    $_SESSION['messages'] = "Thanks for creating an account!";
+    $_SESSION['user'] = [
+        'id' => //fixa pdo last inserted id,
+        'full_name' => $fullName,
+        'username' => $username,
+        'email' => $email
+    ];
+
     redirect('/');
 }
 

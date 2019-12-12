@@ -3,6 +3,13 @@
 <article>
     <h1>Login</h1>
 
+    <p>
+        <?php if (isset($_SESSION['errors'])) {
+            echo $_SESSION['errors'];
+            unset($_SESSION['errors']);
+        } ?>
+    </p>
+
     <form action="app/users/login.php" method="post">
         <div class="form-section">
             <label for="email">Email</label>
