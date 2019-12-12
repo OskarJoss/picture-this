@@ -17,21 +17,26 @@ if (!function_exists('redirect')) {
     }
 }
 
+/**
+ * check if SESSION user is set
+ *
+ * @return boolean
+ */
 function isLoggedIn(): bool
 {
     return isset($_SESSION['user']);
 }
 
 /**
- * Check if a value exists in the database
+ * Check if a value exists in the database in a specific column
  *
- * @param [type] $pdo
+ * @param PDO $pdo
  * @param string $table
  * @param string $column
- * @param [type] $value
+ * @param mixed $value
  * @return boolean
  */
-function existsInDatabase($pdo, string $table, string $column, $value): bool
+function existsInDatabase(PDO $pdo, string $table, string $column, $value): bool
 {
     $statement = $pdo->prepare('SELECT ' . $column . ' FROM ' . $table . ' WHERE ' . $column . ' = :value');
     if (!$statement) {
@@ -47,3 +52,5 @@ function existsInDatabase($pdo, string $table, string $column, $value): bool
         return false;
     }
 }
+
+// make a get posts function

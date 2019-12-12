@@ -10,6 +10,12 @@
                 unset($_SESSION['errors']);
             } ?>
     </p>
+    <p>
+        <?php if (isset($_SESSION['messages'])) {
+                echo $_SESSION['messages'];
+                unset($_SESSION['messages']);
+            } ?>
+    </p>
 
     <form action="app/users/createaccount.php" method="post">
         <div class="form-section">
@@ -37,7 +43,7 @@
     </form>
 <?php else : ?>
     <article>
-        <h1>Logged in</h1>
+        <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
         <p>See the posts below</p>
     </article>
 <?php endif; ?>
