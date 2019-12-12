@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 require __DIR__ . '/../autoload.php';
 
-if (isset($_POST['fullName'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['confirmPassword'])) {
+if (
+    isset($_POST['fullName'],
+    $_POST['email'],
+    $_POST['username'],
+    $_POST['password'],
+    $_POST['confirmPassword'])
+) {
     $fullName = trim(filter_var($_POST['fullName'], FILTER_SANITIZE_STRING));
     $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
     $username = trim(filter_var($_POST['username'], FILTER_SANITIZE_STRING));
@@ -16,8 +22,6 @@ if (isset($_POST['fullName'], $_POST['email'], $_POST['username'], $_POST['passw
         redirect('/');
     }
 
-    //check if email i available
-
     if (existsInDatabase($pdo, 'users', 'email', $email)) {
         $_SESSION['errors'] = "email is already registered";
         redirect('/');
@@ -28,20 +32,17 @@ if (isset($_POST['fullName'], $_POST['email'], $_POST['username'], $_POST['passw
         redirect('/');
     }
 
-    echo "dags o lägga in i databasen";
+    $statement = $pdo->prepare('INSERT INTO users (full_name, username, email, password) VALUES (:fullname, :username, :email, :password)');
 
-    // $statement = $pdo->prepare('SELECT email FROM users WHERE email = :email');
-    // if (!$statement) {
-    //     die(var_dump($pdo->errorInfo()));
-    // }
-    // $statement->execute([
-    //     ':email' => $email
-    // ]);
+    $statement->execute([
+        ':fullname' => $fullName,
+        ':username' => $username,
+        ':email' => $email,
+        ':password' => password_hash($password, PASSWORD_DEFAULT)
+    ]);
 
-    // if ($statement->fetch(PDO::FETCH_ASSOC)) {
-    //     $_SESSION['errors'] = "email is already registered";
-    // }
+    $_SESSION['messages'] = "Thanks for creating an account!";
+    redirect('/');
 }
 
-
-// redirect('/');
+redirect('/');
