@@ -41,9 +41,10 @@ if (
         ':password' => password_hash($password, PASSWORD_DEFAULT)
     ]);
 
+    $id = intval($pdo->lastInsertId());
     //login the user when account is created
     $_SESSION['user'] = [
-        'id' => $pdo->lastInsertId(),
+        'id' => $id,
         'full_name' => $fullName,
         'username' => $username,
         'email' => $email
