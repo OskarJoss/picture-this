@@ -53,4 +53,5 @@ function existsInDatabase(PDO $pdo, string $table, string $column, $value): bool
     }
 }
 
-// make a get posts function
+
+// make a get posts function, use dbPath from front-end as default parameter

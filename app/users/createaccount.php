@@ -42,7 +42,7 @@ if (
     ]);
 
     $_SESSION['user'] = [
-        'id' => //fixa pdo last inserted id,
+        'id' => $pdo->lastInsertId(),
         'full_name' => $fullName,
         'username' => $username,
         'email' => $email
