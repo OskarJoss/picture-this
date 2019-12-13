@@ -10,12 +10,6 @@
                 unset($_SESSION['errors']);
             } ?>
     </p>
-    <p>
-        <?php if (isset($_SESSION['messages'])) {
-                echo $_SESSION['messages'];
-                unset($_SESSION['messages']);
-            } ?>
-    </p>
 
     <form action="app/users/createaccount.php" method="post">
         <div class="form-section">

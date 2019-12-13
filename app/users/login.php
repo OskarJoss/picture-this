@@ -18,12 +18,12 @@ if (isset($_POST['email'], $_POST['password'])) {
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     if ($user === false) {
-        //add error to session
+        $_SESSION['errors'] = "Wrong email or password";
         redirect('/login.php');
     }
 
     if (password_verify($_POST['password'], $user['password']) === false) {
-        //add error to session
+        $_SESSION['errors'] = "Wrong email or password";
         redirect('/login.php');
     }
 
