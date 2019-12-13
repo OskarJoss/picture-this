@@ -1,10 +1,14 @@
 <nav>
     <ul class="nav-list">
         <li>
-            <a class="nav-link" href="/index.php">Home</a>
+            <a href="/index.php">Home</a>
         </li>
 
         <?php if (isLoggedIn()) : ?>
+
+            <li>
+                <a href="/createpost.php">Create Post</a>
+            </li>
 
             <li>
                 <a href="app/users/logout.php">Log out</a>
