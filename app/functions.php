@@ -53,5 +53,30 @@ function existsInDatabase(PDO $pdo, string $table, string $column, $value): bool
     }
 }
 
+function getAllPosts(string $dbPath = 'sqlite:app/database/picturethis.db'): array
+{
+    $pdo = new PDO($dbPath);
+    $statement = $pdo->query('SELECT * FROM posts');
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+    $statement->execute();
+    $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-// make a get posts function, use dbPath from front-end as default parameter
+    return $posts;
+}
+
+function getUserById(int $userId, string $dbPath = 'sqlite:app/database/picturethis.db'): array
+{
+    $pdo = new PDO($dbPath);
+    $statement = $pdo->prepare('SELECT full_name, username, email, avatar FROM users WHERE id = :id');
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+    $statement->execute([
+        ':id' => $userId
+    ]);
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $user;
+}

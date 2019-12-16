@@ -9,6 +9,13 @@
     } ?>
 </p>
 
+<p>
+    <?php if (isset($_SESSION['messages'])) {
+        echo $_SESSION['messages'];
+        unset($_SESSION['messages']);
+    } ?>
+</p>
+
 <form action="app/posts/store.php" method="post" enctype="multipart/form-data">
 
     <div class="form-section">

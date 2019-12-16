@@ -1,5 +1,7 @@
 <?php
 
+//add validate password and username, length
+
 declare(strict_types=1);
 
 require __DIR__ . '/../autoload.php';
@@ -33,6 +35,10 @@ if (
     }
 
     $statement = $pdo->prepare('INSERT INTO users (full_name, username, email, password) VALUES (:fullname, :username, :email, :password)');
+
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
 
     $statement->execute([
         ':fullname' => $fullName,

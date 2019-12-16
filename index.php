@@ -36,10 +36,19 @@
         <button type="submit">Create account</button>
     </form>
 <?php else : ?>
-    <article>
-        <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
-        <p>See the posts below</p>
+
+    <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
+    <p>See the posts below</p>
+
+    <article class="post">
+        <?php foreach (getAllPosts() as $post) : ?>
+            <?php $user = getUserById($post['user_id']); ?>
+            <h1><?php echo $user['username']; ?></h1>
+            <h3><?php echo $post['description']; ?></h3>
+
+        <?php endforeach; ?>
     </article>
+
 <?php endif; ?>
 
 <?php require __DIR__ . '/views/footer.php'; ?>
