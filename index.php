@@ -6,9 +6,9 @@
 
     <p>
         <?php if (isset($_SESSION['errors'])) {
-                echo $_SESSION['errors'];
-                unset($_SESSION['errors']);
-            } ?>
+            echo $_SESSION['errors'];
+            unset($_SESSION['errors']);
+        } ?>
     </p>
 
     <form action="app/users/createaccount.php" method="post">
@@ -40,14 +40,25 @@
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
     <p>See the posts below</p>
 
-    <article class="post">
+    <div class="wrapper">
         <?php foreach (getAllPosts() as $post) : ?>
-            <?php $user = getUserById($post['user_id']); ?>
-            <h1><?php echo $user['username']; ?></h1>
-            <h3><?php echo $post['description']; ?></h3>
-
+            <article class="post">
+                <div class="user-container">
+                    <div class="avatar-container">
+                        <img class="avatar" src="/uploads/avatars/<?php echo $post['avatar']; ?>" alt="avatar">
+                    </div>
+                    <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
+                        <h2 class="username"><?php echo $post['username']; ?></h2>
+                    </a>
+                </div>
+                <div class="post-image-container">
+                    <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
+                </div>
+                <p><?php echo $post['description']; ?></p>
+                <p><?php echo $post['date']; ?></p>
+            </article>
         <?php endforeach; ?>
-    </article>
+    </div>
 
 <?php endif; ?>
 
