@@ -11,6 +11,10 @@
             </li>
 
             <li>
+                <a href="/profile.php?id=<?php echo $_SESSION['user']['id']; ?>">Profile</a>
+            </li>
+
+            <li>
                 <a href="app/users/logout.php">Log out</a>
             </li>
 

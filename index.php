@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/views/header.php'; ?>
-
 <?php if (!isLoggedIn()) : ?>
+
     <h1>Welcome to picture this!</h1>
     <h2>Create account:</h2>
 
@@ -35,13 +35,13 @@
 
         <button type="submit">Create account</button>
     </form>
+
 <?php else : ?>
 
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
-    <p>See the posts below</p>
 
     <div class="wrapper">
-        <?php foreach (getAllPosts() as $post) : ?>
+        <?php foreach (getAllPosts($pdo) as $post) : ?>
             <article class="post">
                 <div class="user-container">
                     <div class="avatar-container">
