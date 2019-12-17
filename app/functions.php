@@ -53,10 +53,16 @@ function existsInDatabase(PDO $pdo, string $table, string $column, $value): bool
     }
 }
 
+/**
+ * Get all posts and the username and avatar of the poster
+ *
+ * @param string $dbPath
+ * @return array
+ */
 function getAllPosts(string $dbPath = 'sqlite:app/database/picturethis.db'): array
 {
     $pdo = new PDO($dbPath);
-    $statement = $pdo->query('SELECT * FROM posts');
+    $statement = $pdo->query('SELECT posts.*, users.username, users.avatar FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.date DESC');
     if (!$statement) {
         die(var_dump($pdo->errorInfo()));
     }
@@ -66,6 +72,13 @@ function getAllPosts(string $dbPath = 'sqlite:app/database/picturethis.db'): arr
     return $posts;
 }
 
+/**
+ * Get user from database
+ *
+ * @param integer $userId
+ * @param string $dbPath
+ * @return array
+ */
 function getUserById(int $userId, string $dbPath = 'sqlite:app/database/picturethis.db'): array
 {
     $pdo = new PDO($dbPath);
