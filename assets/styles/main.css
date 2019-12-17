@@ -6,6 +6,9 @@ button {
     border: 1px solid black;
     height: 2em;
     font-size: 14px;
+    width: 100px;
+
+    margin: 10px 0;
 }
 
 nav {
@@ -79,4 +82,18 @@ textarea {
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile .user-container {
+    display: flex;
+}
+
+.profile .user-container .avatar-container {
+    height: 120px;
+    width: 120px;
 }

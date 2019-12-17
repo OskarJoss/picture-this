@@ -56,12 +56,11 @@ function existsInDatabase(PDO $pdo, string $table, string $column, $value): bool
 /**
  * Get all posts and the username and avatar of the poster
  *
- * @param string $dbPath
+ * @param PDO $pdo
  * @return array
  */
-function getAllPosts(string $dbPath = 'sqlite:app/database/picturethis.db'): array
+function getAllPosts(PDO $pdo): array
 {
-    $pdo = new PDO($dbPath);
     $statement = $pdo->query('SELECT posts.*, users.username, users.avatar FROM posts INNER JOIN users ON posts.user_id = users.id ORDER BY posts.date DESC');
     if (!$statement) {
         die(var_dump($pdo->errorInfo()));
@@ -73,15 +72,15 @@ function getAllPosts(string $dbPath = 'sqlite:app/database/picturethis.db'): arr
 }
 
 /**
- * Get user from database
+ * Get user from database, returns array if user id exists.
+ * If id doesnt exist, false is returned.
  *
+ * @param PDO $pdo
  * @param integer $userId
- * @param string $dbPath
- * @return array
+ * @return mixed
  */
-function getUserById(int $userId, string $dbPath = 'sqlite:app/database/picturethis.db'): array
+function getUserById(PDO $pdo, int $userId)
 {
-    $pdo = new PDO($dbPath);
     $statement = $pdo->prepare('SELECT full_name, username, email, avatar FROM users WHERE id = :id');
     if (!$statement) {
         die(var_dump($pdo->errorInfo()));
@@ -92,4 +91,36 @@ function getUserById(int $userId, string $dbPath = 'sqlite:app/database/picturet
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     return $user;
+}
+
+/**
+ * Get all posts from a user
+ *
+ * @param PDO $pdo
+ * @param integer $userId
+ * @return array
+ */
+function getPostsByUser(PDO $pdo, int $userId): array
+{
+    $statement = $pdo->prepare('SELECT * FROM posts WHERE user_id = :id');
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+    $statement->execute([
+        ':id' => $userId
+    ]);
+    $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $posts;
+}
+
+/**
+ * Check if the page belongs to the logged in user.
+ * Use only if $_GET['id'] is set and user is logged in.
+ *
+ * @return boolean
+ */
+function isYourProfile(): bool
+{
+    return $_SESSION['user']['id'] === $_GET['id'];
 }
