@@ -54,6 +54,7 @@
                 <div class="post-image-container">
                     <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
                 </div>
+                <button class="like-button" data-id="<?php echo $post['id']; ?>">Like</button>
                 <p><?php echo $post['description']; ?></p>
                 <p><?php echo $post['date']; ?></p>
             </article>
