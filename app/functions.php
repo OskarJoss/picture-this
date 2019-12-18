@@ -102,7 +102,7 @@ function getUserById(PDO $pdo, int $userId)
  */
 function getPostsByUser(PDO $pdo, int $userId): array
 {
-    $statement = $pdo->prepare('SELECT * FROM posts WHERE user_id = :id');
+    $statement = $pdo->prepare('SELECT * FROM posts WHERE user_id = :id ORDER BY date DESC');
     if (!$statement) {
         die(var_dump($pdo->errorInfo()));
     }
