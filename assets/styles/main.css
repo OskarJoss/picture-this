@@ -97,3 +97,8 @@ textarea {
     height: 120px;
     width: 120px;
 }
+
+.like-box {
+    display: flex;
+    justify-content: space-between;
+}
