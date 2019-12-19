@@ -18,3 +18,12 @@ likeBtns.forEach(likeBtn => {
             });
     });
 });
+
+//använd för att updatera texten
+//gör en funktion som tar emot response.action och updaterar likesiffran och knappen efter det.
+likeBtns.forEach(likeBtn => {
+    likeBtn.addEventListener("click", event => {
+        const likeBox = event.target.parentElement.querySelector("p");
+        console.log(likeBox);
+    });
+});

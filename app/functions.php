@@ -124,3 +124,51 @@ function isYourProfile(): bool
 {
     return $_SESSION['user']['id'] === $_GET['id'];
 }
+
+/**
+ * Get the number of likes on a post
+ *
+ * @param PDO $pdo
+ * @param string $postId
+ * @return string
+ */
+function getNumberOfLikes(PDO $pdo, string $postId): string
+{
+    $statement = $pdo->prepare('SELECT count(user_id) FROM likes WHERE post_id = :postId');
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+    $statement->execute([
+        ':postId' => $postId
+    ]);
+
+    $count = $statement->fetch(PDO::FETCH_ASSOC)['count(user_id)'];
+
+    return $count;
+}
+
+/**
+ * check if a post is liked by a specific user
+ *
+ * @param PDO $pdo
+ * @param string $userId
+ * @param string $postId
+ * @return boolean
+ */
+function isLikedBy(PDO $pdo, string $userId, string $postId): bool
+{
+    $statement = $pdo->prepare('SELECT * FROM likes WHERE user_id = :userId AND post_id = :postId');
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+    $statement->execute([
+        ':userId' => $userId,
+        ':postId' => $postId
+    ]);
+
+    if ($statement->fetch()) {
+        return true;
+    } else {
+        return false;
+    }
+}

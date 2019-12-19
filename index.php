@@ -54,7 +54,12 @@
                 <div class="post-image-container">
                     <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
                 </div>
-                <button class="like-button" data-id="<?php echo $post['id']; ?>">Like</button>
+                <div class="like-box">
+                    <button class="like-button" data-id="<?php echo $post['id']; ?>">
+                        <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
+                    </button>
+                    <p><?php echo getNumberOfLikes($pdo, $post['id']) . ' Likes'; ?></p>
+                </div>
                 <p><?php echo $post['description']; ?></p>
                 <p><?php echo $post['date']; ?></p>
             </article>
