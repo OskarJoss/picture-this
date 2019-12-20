@@ -1,11 +1,24 @@
 "use strict";
 
-const likeBtns = document.querySelectorAll(".like-button");
-likeBtns.forEach(likeBtn => {
-    likeBtn.addEventListener("click", event => {
-        const formData = new FormData();
-        const postId = event.target.dataset.id;
-        formData.set("id", postId);
+const formatLikes = numberOfLikes => {
+    const int = Number(numberOfLikes);
+    if (int === 0) {
+        return "";
+    }
+    if (int === 1) {
+        return "1 Like";
+    }
+    if (int > 1) {
+        return numberOfLikes + " Likes";
+    }
+};
+
+const likeForms = document.querySelectorAll(".like-form");
+
+likeForms.forEach(likeForm => {
+    likeForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const formData = new FormData(likeForm);
         fetch("http://localhost:8000/app/posts/likes.php", {
             method: "POST",
             body: formData
@@ -13,17 +26,13 @@ likeBtns.forEach(likeBtn => {
             .then(response => {
                 return response.json();
             })
-            .then(message => {
-                console.log(message);
+            .then(json => {
+                const likeBtn = event.target.querySelector("button");
+                const likeNumber = event.target.parentElement.querySelector(
+                    "p"
+                );
+                likeBtn.textContent = json.buttonText;
+                likeNumber.textContent = formatLikes(json.numberOfLikes);
             });
-    });
-});
-
-//använd för att updatera texten
-//gör en funktion som tar emot response.action och updaterar likesiffran och knappen efter det.
-likeBtns.forEach(likeBtn => {
-    likeBtn.addEventListener("click", event => {
-        const likeBox = event.target.parentElement.querySelector("p");
-        console.log(likeBox);
     });
 });

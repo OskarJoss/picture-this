@@ -55,10 +55,14 @@
                     <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
                 </div>
                 <div class="like-box">
-                    <button class="like-button" data-id="<?php echo $post['id']; ?>">
-                        <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
-                    </button>
-                    <p><?php echo getNumberOfLikes($pdo, $post['id']) . ' Likes'; ?></p>
+                    <!-- should I add method and action for clarity? -->
+                    <form class="like-form" action="">
+                        <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
+                        <button class="like-button" type="submit">
+                            <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
+                        </button>
+                    </form>
+                    <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>
                 </div>
                 <p><?php echo $post['description']; ?></p>
                 <p><?php echo $post['date']; ?></p>

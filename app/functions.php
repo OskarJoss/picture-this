@@ -142,7 +142,7 @@ function getNumberOfLikes(PDO $pdo, string $postId): string
         ':postId' => $postId
     ]);
 
-    $count = $statement->fetch(PDO::FETCH_ASSOC)['count(user_id)'];
+    $count = $statement->fetch()[0];
 
     return $count;
 }
@@ -170,5 +170,26 @@ function isLikedBy(PDO $pdo, string $userId, string $postId): bool
         return true;
     } else {
         return false;
+    }
+}
+
+/**
+ * Format the number of likes to a string to be displayed on the front-end
+ *
+ * @param string $numberOfLikes
+ * @return string
+ */
+function formatLikes(string $numberOfLikes): string
+{
+    $int = intval($numberOfLikes);
+
+    if ($int === 0) {
+        return "";
+    }
+    if ($int === 1) {
+        return "1 Like";
+    }
+    if ($int > 1) {
+        return $numberOfLikes . " Likes";
     }
 }
