@@ -1,42 +1,6 @@
 <?php require __DIR__ . '/views/header.php'; ?>
-<?php if (!isLoggedIn()) : ?>
 
-    <h1>Welcome to picture this!</h1>
-    <h2>Create account:</h2>
-
-    <p>
-        <?php if (isset($_SESSION['errors'])) {
-            echo $_SESSION['errors'];
-            unset($_SESSION['errors']);
-        } ?>
-    </p>
-
-    <form action="app/users/createaccount.php" method="post">
-        <div class="form-section">
-            <label for="fullName">Full Name</label>
-            <input type="text" name="fullName" id="fullName" required>
-        </div>
-        <div class="form-section">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
-        </div>
-        <div class="form-section">
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username" required>
-        </div>
-        <div class="form-section">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
-        </div>
-        <div class="form-section">
-            <label for="confirmPassword">confirm password:</label>
-            <input type="password" name="confirmPassword" id="confirmPassword" required>
-        </div>
-
-        <button type="submit">Create account</button>
-    </form>
-
-<?php else : ?>
+<?php if (isLoggedIn()) : ?>
 
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
 
@@ -55,15 +19,55 @@
                     <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
                 </div>
                 <div class="like-box">
-                    <button class="like-button" data-id="<?php echo $post['id']; ?>">
-                        <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
-                    </button>
-                    <p><?php echo getNumberOfLikes($pdo, $post['id']) . ' Likes'; ?></p>
+                    <!-- should I add method and action for clarity? -->
+                    <form class="like-form" action="">
+                        <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
+                        <button class="like-button" type="submit">
+                            <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
+                        </button>
+                    </form>
+                    <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>
                 </div>
                 <p><?php echo $post['description']; ?></p>
                 <p><?php echo $post['date']; ?></p>
             </article>
         <?php endforeach; ?>
+
+    <?php else : ?>
+
+        <h1>Welcome to picture this!</h1>
+        <h2>Create account:</h2>
+
+        <p>
+            <?php if (isset($_SESSION['errors'])) {
+                echo $_SESSION['errors'];
+                unset($_SESSION['errors']);
+            } ?>
+        </p>
+
+        <form action="app/users/createaccount.php" method="post">
+            <div class="form-section">
+                <label for="fullName">Full Name</label>
+                <input type="text" name="fullName" id="fullName" required>
+            </div>
+            <div class="form-section">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="form-section">
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="form-section">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <div class="form-section">
+                <label for="confirmPassword">confirm password:</label>
+                <input type="password" name="confirmPassword" id="confirmPassword" required>
+            </div>
+            <button type="submit">Create account</button>
+        </form>
     </div>
 
 <?php endif; ?>

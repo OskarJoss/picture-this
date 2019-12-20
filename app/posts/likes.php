@@ -25,7 +25,12 @@ if (isset($_POST['id'])) {
             ':postId' => $postId
         ]);
         // response to the front-end
-        $response = ['action' => 'unliked'];
+        $numberOfLikes = getNumberOfLikes($pdo, $postId);
+        $buttonText = "like";
+        $response = [
+            'numberOfLikes' => $numberOfLikes,
+            'buttonText' => $buttonText
+        ];
         echo json_encode($response);
     } else {
         $insertStatement = $pdo->prepare('INSERT INTO likes (user_id, post_id) VALUES (:userId, :postId)');
@@ -37,7 +42,12 @@ if (isset($_POST['id'])) {
             ':postId' => $postId
         ]);
         // response to the front-end
-        $response = ['action' => 'liked'];
+        $numberOfLikes = getNumberOfLikes($pdo, $postId);
+        $buttonText = "unlike";
+        $response = [
+            'numberOfLikes' => $numberOfLikes,
+            'buttonText' => $buttonText
+        ];
         echo json_encode($response);
     }
 }
