@@ -17,7 +17,7 @@
                 </div>
             </div>
             <?php if (isYourProfile()) : ?>
-                <button>Edit Profile</button>
+                <a href="/editprofile.php"><button>Edit Profile</button></a>
             <?php else : ?>
                 <button>Follow</button>
             <?php endif; ?>

@@ -1,5 +1,9 @@
 <?php require __DIR__ . '/views/header.php'; ?>
 
+<?php if (!isLoggedIn()) {
+    redirect('/');
+} ?>
+
 <h1>Create Post</h1>
 
 <p>

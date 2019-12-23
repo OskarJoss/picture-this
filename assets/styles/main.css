@@ -49,6 +49,13 @@ textarea {
     width: 100vw;
 }
 
+.avatar-container .avatar {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .post {
     display: flex;
     flex-direction: column;
@@ -66,11 +73,9 @@ textarea {
     width: 50px;
 }
 
-.avatar-container .avatar {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+.post .like-box {
+    display: flex;
+    justify-content: space-between;
 }
 
 .post-image-container {
@@ -98,7 +103,14 @@ textarea {
     width: 120px;
 }
 
-.like-box {
+.edit-profile {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-profile .avatar-container {
+    height: 150px;
+    width: 150px;
 }
