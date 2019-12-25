@@ -1,0 +1,23 @@
+.edit-profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-profile .avatar-container {
+    height: 150px;
+    width: 150px;
+}
+
+.edit-profile form {
+    background-color: #97d497;
+    width: 100%;
+}
+
+.edit-profile .form-section {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}

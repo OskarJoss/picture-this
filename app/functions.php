@@ -102,12 +102,12 @@ function getUserById(PDO $pdo, int $userId)
  */
 function getPostsByUser(PDO $pdo, int $userId): array
 {
-    $statement = $pdo->prepare('SELECT * FROM posts WHERE user_id = :id ORDER BY date DESC');
+    $statement = $pdo->prepare('SELECT posts.*, users.username, users.avatar FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = :user_id ORDER BY posts.date DESC');
     if (!$statement) {
         die(var_dump($pdo->errorInfo()));
     }
     $statement->execute([
-        ':id' => $userId
+        ':user_id' => $userId
     ]);
     $posts = $statement->fetchAll(PDO::FETCH_ASSOC);
 
