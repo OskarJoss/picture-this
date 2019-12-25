@@ -34,6 +34,21 @@ if (
         redirect('/');
     }
 
+    if (strpos($username, ' ') !== false) {
+        $_SESSION['errors'] = 'no spaces allowed in username';
+        redirect('/');
+    }
+
+    if (strlen($username) < 3 || strlen($username) > 15) {
+        $_SESSION['errors'] = 'username has to be between 3-15 characters long';
+        redirect('/');
+    }
+
+    if (strlen($password) < 6) {
+        $_SESSION['errors'] = 'password has to be at least 6 characters long';
+        redirect('/');
+    }
+
     $statement = $pdo->prepare('INSERT INTO users (full_name, username, email, password) VALUES (:fullname, :username, :email, :password)');
 
     if (!$statement) {
