@@ -1,7 +1,5 @@
 <?php
 
-//add validate password and username, length
-
 declare(strict_types=1);
 
 require __DIR__ . '/../autoload.php';
