@@ -1,0 +1,32 @@
+.post {
+    display: flex;
+    flex-direction: column;
+
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.post .user-container {
+    display: flex;
+}
+
+.post .user-container .avatar-container {
+    height: 50px;
+    width: 50px;
+}
+
+.post .like-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-image-container {
+    width: 100vw;
+    height: 50vh;
+}
+
+.post-image-container .post-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}

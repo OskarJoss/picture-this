@@ -1,0 +1,13 @@
+.profile {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile .user-container {
+    display: flex;
+}
+
+.profile .user-container .avatar-container {
+    height: 120px;
+    width: 120px;
+}
