@@ -3,12 +3,7 @@
 <article>
     <h1>Login</h1>
 
-    <p>
-        <?php if (isset($_SESSION['errors'])) {
-            echo $_SESSION['errors'];
-            unset($_SESSION['errors']);
-        } ?>
-    </p>
+    <?php echoErrorsAndMessages(); ?>
 
     <form action="app/users/login.php" method="post">
         <div class="form-section">

@@ -79,7 +79,7 @@ function getAllPosts(PDO $pdo): array
  * @param integer $userId
  * @return mixed
  */
-function getUserById(PDO $pdo, int $userId)
+function getUserById(PDO $pdo, string $userId)
 {
     $statement = $pdo->prepare('SELECT full_name, username, email, avatar FROM users WHERE id = :id');
     if (!$statement) {
@@ -100,7 +100,7 @@ function getUserById(PDO $pdo, int $userId)
  * @param integer $userId
  * @return array
  */
-function getPostsByUser(PDO $pdo, int $userId): array
+function getPostsByUser(PDO $pdo, string $userId): array
 {
     $statement = $pdo->prepare('SELECT posts.*, users.username, users.avatar FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = :user_id ORDER BY posts.date DESC');
     if (!$statement) {
@@ -191,5 +191,99 @@ function formatLikes(string $numberOfLikes): string
     }
     if ($int > 1) {
         return $numberOfLikes . " Likes";
+    }
+}
+
+/**
+ * Echo any errors or messages set in $_SESSION wrapped in a <p> tag.
+ * Unset them after they have been printed.
+ * The <p> tags have the css classes "errors" and "messages".
+ *
+ * @return void
+ */
+function echoErrorsAndMessages(): void
+{
+    if (isset($_SESSION['errors'])) {
+        echo "<p class=\"errors\">" . $_SESSION['errors'] . "</p>";
+        unset($_SESSION['errors']);
+    }
+    if (isset($_SESSION['messages'])) {
+        echo "<p class=\"messages\">" . $_SESSION['messages'] . "</p>";
+        unset($_SESSION['messages']);
+    }
+}
+
+/**
+ * Check if uploaded image is of valid type and size, if false $_SESSION['errors'] is set accordingly.
+ *
+ * @param array $image
+ * @return boolean
+ */
+function isValidImage(array $image): bool
+{
+    if ($image['type'] !== 'image/jpeg' && $image['type'] !== 'image/jpg' && $image['type'] !== 'image/png') {
+        $_SESSION['errors'] = "The image filetype is not valid";
+        return false;
+    }
+
+    if ($image['size'] > '3000000') {
+        $_SESSION['errors'] = "The image file is too big, 3mb is max";
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Check if username is taken, contains spaces or is of invalid length, if false $_SESSION['errors'] is set accordingly.
+ *
+ * @param PDO $pdo
+ * @param string $username
+ * @return boolean
+ */
+function isValidUsername(PDO $pdo, string $username): bool
+{
+    if (existsInDatabase($pdo, 'users', 'username', $username)) {
+        $_SESSION['errors'] = "username is already registered";
+        return false;
+    }
+
+    if (strpos($username, ' ') !== false) {
+        $_SESSION['errors'] = 'no spaces allowed in username';
+        return false;
+    }
+
+    if (strlen($username) < 3 || strlen($username) > 15) {
+        $_SESSION['errors'] = 'username has to be between 3-15 characters long';
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Create unique file name with extension from the uploaded files type.
+ *
+ * @param string $fileType
+ * @return string
+ */
+function createFileName(string $fileType): string
+{
+    $fileExt = '.' . explode('/', $fileType)[1];
+    $fileName = uniqid("", true) . $fileExt;
+    return $fileName;
+}
+
+/**
+ * If statement is false, die dump $pdo->errorInfo.
+ *
+ * @param PDO $pdo
+ * @param mixed $statement
+ * @return void
+ */
+function pdoErrorInfo(PDO $pdo, $statement): void
+{
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
     }
 }

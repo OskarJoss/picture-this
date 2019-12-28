@@ -13,25 +13,13 @@ if (!isLoggedIn()) {
 if (isset($_POST['description'], $_FILES['image'])) {
     $description = filter_var(trim($_POST['description']), FILTER_SANITIZE_STRING);
     $image = $_FILES['image'];
-
-    if (count($_FILES) > 1) {
-        $_SESSION['errors'] = "You can only upload 1 image in a post";
-        redirect('/createpost.php');
-    }
-
-    if ($image['type'] !== 'image/jpeg' && $image['type'] !== 'image/jpg' && $image['type'] !== 'image/png') {
-        $_SESSION['errors'] = "The image filetype is not valid";
-        redirect('/createpost.php');
-    }
-
-    if ($image['size'] > '3000000') {
-        $_SESSION['errors'] = "The image file is too big, 3mb is max";
-        redirect('/createpost.php');
-    }
-
-    $fileExt = '.' . explode('/', $image['type'])[1];
-    $fileName = uniqid("", true) . $fileExt;
     $id = $_SESSION['user']['id'];
+
+    if (!isValidImage($image)) {
+        redirect('/createpost.php');
+    }
+
+    $fileName = createFileName($image['type']);
 
     if (!move_uploaded_file($image['tmp_name'], '../../uploads/posts/' . $fileName)) {
         $_SESSION['errors'] = "Something went wrong with the upload";
