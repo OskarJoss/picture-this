@@ -11,6 +11,7 @@
 }
 
 .edit-profile form {
+    display: none;
     width: 100%;
     background-color: #97d497;
 }
@@ -34,7 +35,6 @@
 
 .edit-profile .flex-row {
     width: 100%;
-    background-color: #fff3d1;
     border: 1px solid black;
     padding: 0 20px;
 
@@ -43,6 +43,13 @@
     align-items: center;
 }
 
-.visible {
+.edit-profile .flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-profile .visible {
     display: block;
 }

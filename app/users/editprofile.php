@@ -8,48 +8,52 @@ if (!isLoggedIn()) {
     redirect('/');
 }
 
+$id = $_SESSION['user']['id'];
+
 if (isset($_FILES['image'])) {
     $image = $_FILES['image'];
+    $user = getUserById($pdo, $id);
 
-    if (count($_FILES) > 1) {
-        $_SESSION['errors'] = "You can only upload 1 image at a time";
+    if (!isValidImage($image)) {
         redirect('/editprofile.php');
     }
 
-    if ($image['type'] !== 'image/jpeg' && $image['type'] !== 'image/jpg' && $image['type'] !== 'image/png') {
-        $_SESSION['errors'] = "The image filetype is not valid";
-        redirect('/editprofile.php');
-    }
-
-    if ($image['size'] > '3000000') {
-        $_SESSION['errors'] = "The image file is too big, 3mb is max";
-        redirect('/editprofile.php');
-    }
-
-    $fileExt = '.' . explode('/', $image['type'])[1];
-    $fileName = uniqid("", true) . $fileExt;
-    $id = $_SESSION['user']['id'];
+    $fileName = createFileName($image['type']);
 
     if (!move_uploaded_file($image['tmp_name'], '../../uploads/avatars/' . $fileName)) {
         $_SESSION['errors'] = "Something went wrong with the upload";
         redirect('/editprofile.php');
     }
 
-    $user = getUserById($pdo, $id);
     //remove old avatar from uploads unless it's the default avatar pic.
     if ($user['avatar'] !== 'default_avatar.jpeg') {
         unlink(__DIR__ . '/../../uploads/avatars/' . $user['avatar']);
     }
 
     $statement = $pdo->prepare('UPDATE users SET avatar = :avatar WHERE id = :id');
-
-    if (!$statement) {
-        die(var_dump($pdo->errorInfo()));
-    }
+    pdoErrorInfo($pdo, $statement);
 
     $statement->execute([
         ':avatar' => $fileName,
         ':id' => $_SESSION['user']['id']
+    ]);
+
+    redirect('/editprofile.php');
+}
+
+if (isset($_POST['username'])) {
+    $username = trim(filter_var($_POST['username'], FILTER_SANITIZE_STRING));
+
+    if (!isValidUsername($pdo, $username)) {
+        redirect('/editprofile.php');
+    }
+
+    $statement = $pdo->prepare('UPDATE users SET username = :username WHERE id = :id');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':username' => $username,
+        ':id' => $id
     ]);
 
     redirect('/editprofile.php');

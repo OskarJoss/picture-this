@@ -212,3 +212,78 @@ function echoErrorsAndMessages(): void
         unset($_SESSION['messages']);
     }
 }
+
+/**
+ * Check if uploaded image is of valid type and size, if false $_SESSION['errors'] is set accordingly.
+ *
+ * @param array $image
+ * @return boolean
+ */
+function isValidImage(array $image): bool
+{
+    if ($image['type'] !== 'image/jpeg' && $image['type'] !== 'image/jpg' && $image['type'] !== 'image/png') {
+        $_SESSION['errors'] = "The image filetype is not valid";
+        return false;
+    }
+
+    if ($image['size'] > '3000000') {
+        $_SESSION['errors'] = "The image file is too big, 3mb is max";
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Check if username is taken, contains spaces or is of invalid length, if false $_SESSION['errors'] is set accordingly.
+ *
+ * @param PDO $pdo
+ * @param string $username
+ * @return boolean
+ */
+function isValidUsername(PDO $pdo, string $username): bool
+{
+    if (existsInDatabase($pdo, 'users', 'username', $username)) {
+        $_SESSION['errors'] = "username is already registered";
+        return false;
+    }
+
+    if (strpos($username, ' ') !== false) {
+        $_SESSION['errors'] = 'no spaces allowed in username';
+        return false;
+    }
+
+    if (strlen($username) < 3 || strlen($username) > 15) {
+        $_SESSION['errors'] = 'username has to be between 3-15 characters long';
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Create unique file name with extension from the uploaded files type.
+ *
+ * @param string $fileType
+ * @return string
+ */
+function createFileName(string $fileType): string
+{
+    $fileExt = '.' . explode('/', $fileType)[1];
+    $fileName = uniqid("", true) . $fileExt;
+    return $fileName;
+}
+
+/**
+ * If statement is false, die dump $pdo->errorInfo.
+ *
+ * @param PDO $pdo
+ * @param mixed $statement
+ * @return void
+ */
+function pdoErrorInfo(PDO $pdo, $statement): void
+{
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+}

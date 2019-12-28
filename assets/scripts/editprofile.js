@@ -4,6 +4,9 @@ const showFormButtons = document.querySelectorAll(".show-form-button");
 
 showFormButtons.forEach(btn => {
     btn.addEventListener("click", event => {
-        console.log(event.target);
+        const form = event.target.parentElement.parentElement.querySelector(
+            "form"
+        );
+        form.classList.toggle("visible");
     });
 });
