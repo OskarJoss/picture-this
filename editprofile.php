@@ -8,20 +8,7 @@
 
     <h1>Edit Profile</h1>
 
-
-    <p>
-        <?php if (isset($_SESSION['errors'])) {
-            echo $_SESSION['errors'];
-            unset($_SESSION['errors']);
-        } ?>
-    </p>
-
-    <p>
-        <?php if (isset($_SESSION['messages'])) {
-            echo $_SESSION['messages'];
-            unset($_SESSION['messages']);
-        } ?>
-    </p>
+    <?php echoErrorsAndMessages(); ?>
 
     <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
 

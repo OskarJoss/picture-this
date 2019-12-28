@@ -193,3 +193,22 @@ function formatLikes(string $numberOfLikes): string
         return $numberOfLikes . " Likes";
     }
 }
+
+/**
+ * Echo any errors or messages set in $_SESSION wrapped in a <p> tag.
+ * Unset them after they have been printed.
+ * The <p> tags have the css classes "errors" and "messages".
+ *
+ * @return void
+ */
+function echoErrorsAndMessages(): void
+{
+    if (isset($_SESSION['errors'])) {
+        echo "<p class=\"errors\">" . $_SESSION['errors'] . "</p>";
+        unset($_SESSION['errors']);
+    }
+    if (isset($_SESSION['messages'])) {
+        echo "<p class=\"messages\">" . $_SESSION['messages'] . "</p>";
+        unset($_SESSION['messages']);
+    }
+}

@@ -6,19 +6,7 @@
 
 <h1>Create Post</h1>
 
-<p>
-    <?php if (isset($_SESSION['errors'])) {
-        echo $_SESSION['errors'];
-        unset($_SESSION['errors']);
-    } ?>
-</p>
-
-<p>
-    <?php if (isset($_SESSION['messages'])) {
-        echo $_SESSION['messages'];
-        unset($_SESSION['messages']);
-    } ?>
-</p>
+<?php echoErrorsAndMessages(); ?>
 
 <form action="app/posts/store.php" method="post" enctype="multipart/form-data">
 
