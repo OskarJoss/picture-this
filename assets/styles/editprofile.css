@@ -11,13 +11,38 @@
 }
 
 .edit-profile form {
-    background-color: #97d497;
     width: 100%;
+    background-color: #97d497;
 }
 
 .edit-profile .form-section {
+    padding: 0 20px;
+
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.edit-profile article {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-profile .flex-row {
+    width: 100%;
+    background-color: #fff3d1;
+    border: 1px solid black;
     padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.visible {
+    display: block;
 }

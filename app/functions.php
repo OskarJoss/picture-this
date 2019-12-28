@@ -79,7 +79,7 @@ function getAllPosts(PDO $pdo): array
  * @param integer $userId
  * @return mixed
  */
-function getUserById(PDO $pdo, int $userId)
+function getUserById(PDO $pdo, string $userId)
 {
     $statement = $pdo->prepare('SELECT full_name, username, email, avatar FROM users WHERE id = :id');
     if (!$statement) {
@@ -100,7 +100,7 @@ function getUserById(PDO $pdo, int $userId)
  * @param integer $userId
  * @return array
  */
-function getPostsByUser(PDO $pdo, int $userId): array
+function getPostsByUser(PDO $pdo, string $userId): array
 {
     $statement = $pdo->prepare('SELECT posts.*, users.username, users.avatar FROM posts INNER JOIN users ON posts.user_id = users.id WHERE user_id = :user_id ORDER BY posts.date DESC');
     if (!$statement) {
