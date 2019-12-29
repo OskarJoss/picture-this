@@ -1,5 +1,5 @@
 p {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 button {
@@ -35,4 +35,18 @@ textarea {
     width: 100%;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.errors {
+    width: 100%;
+    position: absolute;
+    background-color: red;
+    color: white;
+}
+
+.messages {
+    width: 100%;
+    position: absolute;
+    background-color: green;
+    color: white;
 }

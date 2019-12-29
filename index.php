@@ -23,7 +23,7 @@
                     <form class="like-form" action="">
                         <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
                         <button class="like-button" type="submit">
-                            <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
+                            <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like"; ?>
                         </button>
                     </form>
                     <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>
