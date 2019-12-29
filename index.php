@@ -1,5 +1,11 @@
 <?php require __DIR__ . '/views/header.php'; ?>
 
+<?php
+//$hej = "'";
+//$hejsan = filter_var($hej, FILTER_SANITIZE_STRING);
+//die(var_dump($hejsan));
+?>
+
 <?php if (isLoggedIn()) : ?>
 
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
@@ -23,7 +29,7 @@
                     <form class="like-form" action="">
                         <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
                         <button class="like-button" type="submit">
-                            <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like" ?>
+                            <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like"; ?>
                         </button>
                     </form>
                     <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>

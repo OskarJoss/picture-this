@@ -17,6 +17,7 @@
                 </div>
                 <div class="bio-container">
                     <h2><?php echo $user['username']; ?></h2>
+                    <p><?php echo isset($user['biography']) ? $user['biography'] : ''; ?></p>
                 </div>
             </article>
 

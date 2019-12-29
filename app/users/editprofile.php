@@ -38,6 +38,8 @@ if (isset($_FILES['image'])) {
         ':id' => $_SESSION['user']['id']
     ]);
 
+    $_SESSION['messages'] = "Avatar updated";
+
     redirect('/editprofile.php');
 }
 
@@ -55,6 +57,33 @@ if (isset($_POST['username'])) {
         ':username' => $username,
         ':id' => $id
     ]);
+
+    $_SESSION['messages'] = "Username updated";
+
+    redirect('/editprofile.php');
+}
+
+if (isset($_POST['biography'])) {
+    $biography = filter_var(trim($_POST['biography']), FILTER_SANITIZE_STRING);
+
+    if (strlen($biography) > 140) {
+        $_SESSION['errors'] = "Biography is too long, 140 characters is max";
+        redirect('/editprofile.php');
+    }
+
+    if (strlen($biography) === 0) {
+        $biography = NULL;
+    }
+
+    $statement = $pdo->prepare('UPDATE users SET biography = :biography WHERE id = :id');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':biography' => $biography,
+        ':id' => $id
+    ]);
+
+    $_SESSION['messages'] = "bio updated";
 
     redirect('/editprofile.php');
 }

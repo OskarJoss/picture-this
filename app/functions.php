@@ -81,7 +81,7 @@ function getAllPosts(PDO $pdo): array
  */
 function getUserById(PDO $pdo, string $userId)
 {
-    $statement = $pdo->prepare('SELECT full_name, username, email, avatar FROM users WHERE id = :id');
+    $statement = $pdo->prepare('SELECT full_name, username, email, avatar, biography FROM users WHERE id = :id');
     if (!$statement) {
         die(var_dump($pdo->errorInfo()));
     }

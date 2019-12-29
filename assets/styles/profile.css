@@ -1,13 +1,21 @@
 .profile {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile .user-info {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile .user-info .avatar-container {
     height: 120px;
     width: 120px;
+}
+
+.profile .bio-container {
+    width: calc(100vw - 150px);
 }
