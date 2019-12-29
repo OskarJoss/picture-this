@@ -71,6 +71,10 @@ if (isset($_POST['biography'])) {
         redirect('/editprofile.php');
     }
 
+    if (strlen($biography) === 0) {
+        $biography = NULL;
+    }
+
     $statement = $pdo->prepare('UPDATE users SET biography = :biography WHERE id = :id');
     pdoErrorInfo($pdo, $statement);
 
