@@ -1,11 +1,5 @@
 <?php require __DIR__ . '/views/header.php'; ?>
 
-<?php
-//$hej = "'";
-//$hejsan = filter_var($hej, FILTER_SANITIZE_STRING);
-//die(var_dump($hejsan));
-?>
-
 <?php if (isLoggedIn()) : ?>
 
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
