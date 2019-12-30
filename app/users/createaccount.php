@@ -37,10 +37,7 @@ if (
     }
 
     $statement = $pdo->prepare('INSERT INTO users (full_name, username, email, password) VALUES (:fullname, :username, :email, :password)');
-
-    if (!$statement) {
-        die(var_dump($pdo->errorInfo()));
-    }
+    pdoErrorInfo($pdo, $statement);
 
     $statement->execute([
         ':fullname' => $fullName,

@@ -1,10 +1,6 @@
 <?php require __DIR__ . '/views/header.php'; ?>
 
-<?php
-//$hej = "'";
-//$hejsan = filter_var($hej, FILTER_SANITIZE_STRING);
-//die(var_dump($hejsan));
-?>
+<?php echoErrorsAndMessages(); ?>
 
 <?php if (isLoggedIn()) : ?>
 
@@ -43,8 +39,6 @@
 
         <h1>Welcome to picture this!</h1>
         <h2>Create account:</h2>
-
-        <?php echoErrorsAndMessages(); ?>
 
         <form action="app/users/createaccount.php" method="post">
             <div class="form-section">

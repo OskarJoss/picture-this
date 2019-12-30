@@ -18,6 +18,20 @@ if (!function_exists('redirect')) {
 }
 
 /**
+ * If statement is false, die dump $pdo->errorInfo.
+ *
+ * @param PDO $pdo
+ * @param mixed $statement
+ * @return void
+ */
+function pdoErrorInfo(PDO $pdo, $statement): void
+{
+    if (!$statement) {
+        die(var_dump($pdo->errorInfo()));
+    }
+}
+
+/**
  * check if SESSION user is set
  *
  * @return boolean
@@ -91,6 +105,27 @@ function getUserById(PDO $pdo, string $userId)
     $user = $statement->fetch(PDO::FETCH_ASSOC);
 
     return $user;
+}
+
+/**
+ * Get a post from the database and username/avatar of poster, returns an array if the post exists, otherwize false is returned.
+ *
+ * @param PDO $pdo
+ * @param string $postId
+ * @return mixed
+ */
+function getPostById(PDO $pdo, string $postId)
+{
+    $statement = $pdo->prepare('SELECT posts.*, users.username, users.avatar FROM posts INNER JOIN users ON posts.user_id = users.id WHERE posts.id = :id');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':id' => $postId
+    ]);
+
+    $post = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $post;
 }
 
 /**
@@ -272,18 +307,4 @@ function createFileName(string $fileType): string
     $fileExt = '.' . explode('/', $fileType)[1];
     $fileName = uniqid("", true) . $fileExt;
     return $fileName;
-}
-
-/**
- * If statement is false, die dump $pdo->errorInfo.
- *
- * @param PDO $pdo
- * @param mixed $statement
- * @return void
- */
-function pdoErrorInfo(PDO $pdo, $statement): void
-{
-    if (!$statement) {
-        die(var_dump($pdo->errorInfo()));
-    }
 }

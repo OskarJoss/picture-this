@@ -57,6 +57,44 @@
         </form>
     </article>
 
+    <article>
+        <div class="flex-row">
+            <p>Email:</p>
+            <p><?php echo $user['email']; ?></p>
+            <button class="show-form-button">Edit</button>
+        </div>
+        <form action="app/users/editprofile.php" method="post">
+            <div class="form-section">
+                <label for="email">Update email:</label>
+                <input type="email" name="email" id="email" required>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </article>
+
+    <article>
+        <div class="flex-row">
+            <p>Password:</p>
+            <p>*****</p>
+            <button class="show-form-button">Edit</button>
+        </div>
+        <form action="app/users/editprofile.php" method="post">
+            <div class="form-section">
+                <label for="oldPassword">Old Password:</label>
+                <input type="password" name="oldPassword" id="oldPassword" required>
+            </div>
+            <div class="form-section">
+                <label for="newPassword">New Password:</label>
+                <input type="password" name="newPassword" id="newPassword" required>
+            </div>
+            <div class="form-section">
+                <label for="confirmNewPassword">Confirm New Password:</label>
+                <input type="password" name="confirmNewPassword" id="confirmNewPassword" required>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </article>
+
 
 </section>
 

@@ -35,7 +35,7 @@ if (isset($_FILES['image'])) {
 
     $statement->execute([
         ':avatar' => $fileName,
-        ':id' => $_SESSION['user']['id']
+        ':id' => $id
     ]);
 
     $_SESSION['messages'] = "Avatar updated";
@@ -64,7 +64,8 @@ if (isset($_POST['username'])) {
 }
 
 if (isset($_POST['biography'])) {
-    $biography = filter_var(trim($_POST['biography']), FILTER_SANITIZE_STRING);
+    //FILTER_FLAG_NO_ENCODE_QUOTES to solve problem with "'" counting as 5 characters.
+    $biography = filter_var(trim($_POST['biography']), FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
     if (strlen($biography) > 140) {
         $_SESSION['errors'] = "Biography is too long, 140 characters is max";
@@ -84,6 +85,60 @@ if (isset($_POST['biography'])) {
     ]);
 
     $_SESSION['messages'] = "bio updated";
+
+    redirect('/editprofile.php');
+}
+
+if (isset($_POST['email'])) {
+    $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
+
+    if (existsInDatabase($pdo, 'users', 'email', $email)) {
+        $_SESSION['errors'] = "email is already registered";
+        redirect('/');
+    }
+
+    $statement = $pdo->prepare('UPDATE users SET email = :email WHERE id = :id');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':email' => $email,
+        ':id' => $id
+    ]);
+
+    $_SESSION['messages'] = "email updated";
+
+    redirect('/editprofile.php');
+}
+
+if (isset($_POST['oldPassword'], $_POST['newPassword'], $_POST['confirmNewPassword'])) {
+    $oldPassword = $_POST['oldPassword'];
+    $newPassword = $_POST['newPassword'];
+    $confirmNewPassword = $_POST['confirmNewPassword'];
+
+    if ($newPassword !== $confirmNewPassword) {
+        $_SESSION['errors'] = "passwords are not the same";
+        redirect('/editprofile.php');
+    }
+
+    if ($oldPassword === $newPassword) {
+        $_SESSION['errors'] = "old and new passwords are the same";
+        redirect('/editprofile.php');
+    }
+
+    if (strlen($newPassword) < 6) {
+        $_SESSION['errors'] = 'password has to be at least 6 characters long';
+        redirect('/editprofile.php');
+    }
+
+    $statement = $pdo->prepare('UPDATE users SET password = :password WHERE id = :id');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':password' => password_hash($newPassword, PASSWORD_DEFAULT),
+        ':id' => $id
+    ]);
+
+    $_SESSION['messages'] = "password updated";
 
     redirect('/editprofile.php');
 }
