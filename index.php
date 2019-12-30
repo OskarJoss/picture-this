@@ -1,5 +1,7 @@
 <?php require __DIR__ . '/views/header.php'; ?>
 
+<?php echoErrorsAndMessages(); ?>
+
 <?php if (isLoggedIn()) : ?>
 
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
@@ -37,8 +39,6 @@
 
         <h1>Welcome to picture this!</h1>
         <h2>Create account:</h2>
-
-        <?php echoErrorsAndMessages(); ?>
 
         <form action="app/users/createaccount.php" method="post">
             <div class="form-section">

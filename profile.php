@@ -4,6 +4,8 @@
     redirect('/');
 } ?>
 
+<?php echoErrorsAndMessages(); ?>
+
 <section class="profile">
 
     <?php if (isset($_GET['id'])) : ?>
@@ -55,7 +57,7 @@
                     <p><?php echo $post['date']; ?></p>
 
                     <?php if (isYourProfile()) : ?>
-                        <button>Edit Post</button>
+                        <a href="/editpost.php?id=<?php echo $post['id'] ?>"><button>Edit Post</button></a>
                     <?php endif; ?>
                 </article>
 
