@@ -33,6 +33,9 @@ likeForms.forEach(likeForm => {
                 );
                 likeBtn.textContent = json.buttonText;
                 likeNumber.textContent = formatLikes(json.numberOfLikes);
+            })
+            .catch(error => {
+                console.error("Error:", error);
             });
     });
 });

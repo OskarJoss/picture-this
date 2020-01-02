@@ -39,7 +39,7 @@
                         <img class="avatar" src="/uploads/avatars/<?php echo $user['avatar']; ?>" alt="avatar">
                     </div>
                     <input type="hidden" name="id" value="<?php echo $post['id']; ?>">
-                    <textarea name="comment" cols="45" rows="1" placeholder="Leave a comment..."></textarea>
+                    <textarea name="comment" cols="45" rows="1" maxlength="140" placeholder="Leave a comment..." required></textarea>
                     <button type="submit">Send</button>
                 </form>
             </article>
