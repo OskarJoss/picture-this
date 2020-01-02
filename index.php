@@ -16,6 +16,7 @@
                     <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
                         <h2 class="username"><?php echo $post['username']; ?></h2>
                     </a>
+                    <p><?php echo $post['date']; ?></p>
                 </div>
                 <div class="post-image-container">
                     <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
@@ -31,7 +32,16 @@
                     <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>
                 </div>
                 <p><?php echo $post['description']; ?></p>
-                <p><?php echo $post['date']; ?></p>
+                <ol class="comment-list"></ol>
+                <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
+                <form class="comment-form" action="" method="post">
+                    <div class="avatar-container">
+                        <img class="avatar" src="/uploads/avatars/<?php echo $user['avatar']; ?>" alt="avatar">
+                    </div>
+                    <input type="hidden" name="id" value="<?php echo $post['id']; ?>">
+                    <textarea name="comment" cols="45" rows="1" maxlength="140" placeholder="Leave a comment..." required></textarea>
+                    <button type="submit">Send</button>
+                </form>
             </article>
         <?php endforeach; ?>
 

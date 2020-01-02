@@ -8,6 +8,8 @@
 
 .post .user-container {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .post .user-container .avatar-container {
@@ -29,4 +31,21 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+.post .comment-list {
+    margin: 0;
+}
+
+.post textarea {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.post .comment-form {
+    display: flex;
+}
+
+.comment-form .avatar-container {
+    height: 40px;
+    width: 40px;
 }
