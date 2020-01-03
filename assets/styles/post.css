@@ -49,3 +49,33 @@
     height: 40px;
     width: 40px;
 }
+
+.post .comment {
+    background-color: #f7e9bf;
+    border-radius: 5px 5px 5px 5px;
+    margin: 3px;
+    padding: 5px;
+
+    display: flex;
+    align-items: center;
+}
+
+.post .comment .avatar-container {
+    height: 35px;
+    width: 35px;
+}
+
+.post .comment p {
+    max-width: calc(100% - 40px);
+    margin: 2px 0;
+}
+
+.post .comment p span {
+    margin: 0 5px;
+    color: #3e3ea3;
+    font-size: 18px;
+}
+
+.post .comment-list {
+    padding-left: 5px;
+}

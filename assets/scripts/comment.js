@@ -12,7 +12,7 @@ commentForms.forEach(commentForm => {
                 return response.json();
             })
             .then(json => {
-                //display errors with POST data
+                //display problems with the POST data
                 if (json.status === false) {
                     window.alert(json.errors);
                 } else {
