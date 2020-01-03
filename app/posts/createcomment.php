@@ -58,9 +58,22 @@ if (isset($_POST['comment'], $_POST['id'])) {
         ':comment' => $comment
     ]);
 
+    //get last added comment and commenter for the json response
+    $statement = $pdo->prepare('SELECT * FROM comments WHERE id = :id');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':id' => $pdo->lastInsertId()
+    ]);
+
+    $comment = $statement->fetch(PDO::FETCH_ASSOC);
+
+    $user = getUserById($pdo, $_SESSION['user']['id']);
+
     $response = [
         'status' => $status,
-        'postId' => $postId
+        'comment' => $comment,
+        'user' => $user
     ];
 
     echo json_encode($response);

@@ -308,3 +308,29 @@ function createFileName(string $fileType): string
     $fileName = uniqid("", true) . $fileExt;
     return $fileName;
 }
+
+/**
+ * Get the 2 latest comments on the post, returns an array with 0-2 items.
+ *
+ * @param PDO $pdo
+ * @param string $postId
+ * @return array
+ */
+function getLatestComments(PDO $pdo, string $postId): array
+{
+    $statement = $pdo->prepare('SELECT * FROM comments WHERE post_id = :postId ORDER BY date DESC LIMIT 2');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':postId' => $postId
+    ]);
+
+    $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    //place the latest comment at the bottom
+    if (count($comments) === 2) {
+        $comments = array_reverse($comments);
+    }
+
+    return $comments;
+}

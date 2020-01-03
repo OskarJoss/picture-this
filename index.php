@@ -10,9 +10,11 @@
         <?php foreach (getAllPosts($pdo) as $post) : ?>
             <article class="post">
                 <div class="user-container">
-                    <div class="avatar-container">
-                        <img class="avatar" src="/uploads/avatars/<?php echo $post['avatar']; ?>" alt="avatar">
-                    </div>
+                    <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
+                        <div class="avatar-container">
+                            <img class="avatar" src="/uploads/avatars/<?php echo $post['avatar']; ?>" alt="avatar">
+                        </div>
+                    </a>
                     <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
                         <h2 class="username"><?php echo $post['username']; ?></h2>
                     </a>
@@ -31,8 +33,24 @@
                     </form>
                     <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>
                 </div>
-                <p><?php echo $post['description']; ?></p>
-                <ol class="comment-list"></ol>
+                <?php if (strlen($post['description']) !== 0) : ?>
+                    <p><?php echo $post['description']; ?></p>
+                <?php endif; ?>
+                <ol class="comment-list">
+                    <?php if (count(getLatestComments($pdo, $post['id'])) !== 0) : ?>
+                        <?php foreach (getLatestComments($pdo, $post['id']) as $comment) : ?>
+                            <?php $commenter = getUserById($pdo, $comment['user_id']); ?>
+                            <li class="comment">
+                                <a href="/profile.php?id=<?php echo $comment['user_id']; ?>">
+                                    <div class="avatar-container">
+                                        <img class="avatar" src="/uploads/avatars/<?php echo $commenter['avatar']; ?>" alt="avatar">
+                                    </div>
+                                </a>
+                                <p><a href="/profile.php?id=<?php echo $comment['user_id']; ?>"><span><?php echo $commenter['username']; ?></span></a><?php echo $comment['comment']; ?></p>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ol>
                 <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
                 <form class="comment-form" action="" method="post">
                     <div class="avatar-container">
