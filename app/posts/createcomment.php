@@ -16,13 +16,13 @@ if (isset($_POST['comment'], $_POST['id'])) {
     $postId = trim(filter_var($_POST['id'], FILTER_SANITIZE_STRING));
     $user = getUserById($pdo, $_SESSION['user']['id']);
 
-    $status = true;
+    $valid = true;
 
     if (!existsInDatabase($pdo, 'posts', 'id', $postId)) {
-        $status = false;
+        $valid = false;
         $errors = "post doesn't exist";
         $response = [
-            'status' => $status,
+            'valid' => $valid,
             'errors' => $errors
         ];
         echo json_encode($response);
@@ -30,10 +30,10 @@ if (isset($_POST['comment'], $_POST['id'])) {
     }
 
     if (strlen($comment) > 140 || strlen($comment) === 0) {
-        $status = false;
+        $valid = false;
         $errors = "comment has to bee between 1-140 characters";
         $response = [
-            'status' => $status,
+            'valid' => $valid,
             'errors' => $errors
         ];
         echo json_encode($response);
@@ -42,10 +42,10 @@ if (isset($_POST['comment'], $_POST['id'])) {
 
     $statement = $pdo->prepare('INSERT INTO comments (user_id, post_id, comment) VALUES (:user_id, :post_id, :comment)');
     if (!$statement) {
-        $status = false;
+        $valid = false;
         $errors = $pdo->errorInfo();
         $response = [
-            'status' => $status,
+            'valid' => $valid,
             'errors' => $errors
         ];
         echo json_encode($response);
@@ -71,7 +71,7 @@ if (isset($_POST['comment'], $_POST['id'])) {
     $user = getUserById($pdo, $_SESSION['user']['id']);
 
     $response = [
-        'status' => $status,
+        'valid' => $valid,
         'comment' => $comment,
         'user' => $user
     ];

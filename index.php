@@ -9,6 +9,7 @@
     <div class="wrapper">
         <?php foreach (getAllPosts($pdo) as $post) : ?>
             <article class="post">
+                <!-- user and date -->
                 <div class="user-container">
                     <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
                         <div class="avatar-container">
@@ -20,9 +21,11 @@
                     </a>
                     <p><?php echo $post['date']; ?></p>
                 </div>
+                <!-- post image -->
                 <div class="post-image-container">
                     <img class="post-image" src="/uploads/posts/<?php echo $post['image']; ?>" alt="post image">
                 </div>
+                <!-- likes -->
                 <div class="like-box">
                     <!-- should I add method and action for clarity? -->
                     <form class="like-form" action="">
@@ -33,8 +36,17 @@
                     </form>
                     <p><?php echo formatLikes(getNumberOfLikes($pdo, $post['id'])); ?></p>
                 </div>
+                <!-- description -->
                 <?php if (strlen($post['description']) !== 0) : ?>
                     <p><?php echo $post['description']; ?></p>
+                <?php endif; ?>
+                <!-- comments -->
+                <?php $numberOfComments = getNumberOfComments($pdo, $post['id']); ?>
+                <?php if ($numberOfComments > 2) : ?>
+                    <form class="show-comments-form" action="">
+                        <input type="hidden" name="id" value="<?php echo $post['id']; ?>">
+                        <button class="show-comments-button">show all <?php echo $numberOfComments ?> comments</button>
+                    </form>
                 <?php endif; ?>
                 <ol class="comment-list">
                     <?php if (count(getLatestComments($pdo, $post['id'])) !== 0) : ?>
@@ -51,6 +63,7 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </ol>
+                <!-- comment input -->
                 <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
                 <form class="comment-form" action="" method="post">
                     <div class="avatar-container">
