@@ -334,3 +334,24 @@ function getLatestComments(PDO $pdo, string $postId): array
 
     return $comments;
 }
+
+/**
+ * Get the number of replies on a post
+ *
+ * @param PDO $pdo
+ * @param string $postId
+ * @return string
+ */
+function getNumberOfComments(PDO $pdo, string $postId): string
+{
+    $statement = $pdo->prepare('SELECT count(*) FROM comments WHERE post_id = :postId');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':postId' => $postId
+    ]);
+
+    $count = $statement->fetch()[0];
+
+    return $count;
+}
