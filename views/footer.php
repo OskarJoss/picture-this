@@ -5,6 +5,7 @@
 <script src="/assets/scripts/editprofile.js"></script>
 <script src="/assets/scripts/editpost.js"></script>
 <script src="/assets/scripts/comment.js"></script>
+<script src="/assets/scripts/reply.js"></script>
 </body>
 
 </html>

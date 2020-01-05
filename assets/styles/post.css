@@ -33,10 +33,6 @@
     object-fit: cover;
 }
 
-.post .comment-list {
-    margin: 0;
-}
-
 .post textarea {
     border-radius: 5px 5px 5px 5px;
 }
@@ -45,12 +41,17 @@
     display: flex;
 }
 
+.post .comment-list {
+    padding-left: 5px;
+    margin: 0;
+}
+
 .comment-form .avatar-container {
     height: 40px;
     width: 40px;
 }
 
-.post .comment {
+.comment .comment-container {
     background-color: #f7e9bf;
     border-radius: 5px 5px 5px 5px;
     margin: 3px;
@@ -60,22 +61,51 @@
     align-items: center;
 }
 
-.post .comment .avatar-container {
+.comment .comment-container .avatar-container {
     height: 35px;
     width: 35px;
 }
 
-.post .comment p {
+.comment .comment-container p {
     max-width: calc(100% - 40px);
     margin: 2px 0;
 }
 
-.post .comment p span {
+.comment .comment-container p span {
     margin: 0 5px;
     color: #3e3ea3;
     font-size: 18px;
 }
 
-.post .comment-list {
-    padding-left: 5px;
+.comment .reply-buttons-container {
+    line-height: 1em;
+}
+
+.comment .reply-buttons-container button {
+    margin: 0 5px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    height: 1em;
+    font-size: 11px;
+    padding: 0;
+}
+
+.comment .reply-form {
+    margin-left: 50px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment .visible {
+    display: flex;
+}
+
+.comment .reply-form button {
+    margin: 0;
+}
+
+.comment .reply-form .avatar-container {
+    height: 30px;
+    width: 30px;
 }
