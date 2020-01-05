@@ -160,6 +160,24 @@ function isYourProfile(): bool
     return $_SESSION['user']['id'] === $_GET['id'];
 }
 
+function isYourComment($pdo, $userId, $postId): bool
+{
+    $statement = $pdo->prepare('SELECT * FROM comments WHERE id = :postId');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':postId' => $postId
+    ]);
+
+    $post = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if ($post['user_id'] === $_SESSION['user']['id']) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 /**
  * Get the number of likes on a post
  *

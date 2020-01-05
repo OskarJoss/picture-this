@@ -6,6 +6,7 @@
 
     <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
 
+    <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
     <div class="wrapper">
         <?php foreach (getAllPosts($pdo) as $post) : ?>
             <article class="post">
@@ -48,23 +49,40 @@
                         <button class="show-comments-button">show all <?php echo $numberOfComments ?> comments</button>
                     </form>
                 <?php endif; ?>
-                <ol class="comment-list">
+                <ul class="comment-list">
                     <?php if (count(getLatestComments($pdo, $post['id'])) !== 0) : ?>
                         <?php foreach (getLatestComments($pdo, $post['id']) as $comment) : ?>
                             <?php $commenter = getUserById($pdo, $comment['user_id']); ?>
-                            <li class="comment">
-                                <a href="/profile.php?id=<?php echo $comment['user_id']; ?>">
+                            <article class="comment">
+                                <li class="comment-container">
+                                    <a href="/profile.php?id=<?php echo $comment['user_id']; ?>">
+                                        <div class="avatar-container">
+                                            <img class="avatar" src="/uploads/avatars/<?php echo $commenter['avatar']; ?>" alt="avatar">
+                                        </div>
+                                    </a>
+                                    <p><a href="/profile.php?id=<?php echo $comment['user_id']; ?>"><span><?php echo $commenter['username']; ?></span></a><?php echo $comment['comment']; ?></p>
+                                </li>
+                                <!-- replies -->
+                                <div class="reply-buttons-container">
+                                    <button class="reply-button">reply/show X replies</button>
+                                    <?php if (isYourComment($pdo, $_SESSION['user']['id'], $comment['id'])) : ?>
+                                        <button>edit comment</button>
+                                    <?php endif; ?>
+                                </div>
+                                <ul class="reply-list"></ul>
+                                <form class="reply-form" action="" method="post">
                                     <div class="avatar-container">
-                                        <img class="avatar" src="/uploads/avatars/<?php echo $commenter['avatar']; ?>" alt="avatar">
+                                        <img class="avatar" src="/uploads/avatars/<?php echo $user['avatar']; ?>" alt="avatar">
                                     </div>
-                                </a>
-                                <p><a href="/profile.php?id=<?php echo $comment['user_id']; ?>"><span><?php echo $commenter['username']; ?></span></a><?php echo $comment['comment']; ?></p>
-                            </li>
+                                    <input type="hidden" name="id" value="<?php echo $comment['id']; ?>">
+                                    <textarea name="reply" cols="45" rows="1" maxlength="140" placeholder="reply..." required></textarea>
+                                    <button type="submit">Send</button>
+                                </form>
+                            </article>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                </ol>
+                </ul>
                 <!-- comment input -->
-                <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
                 <form class="comment-form" action="" method="post">
                     <div class="avatar-container">
                         <img class="avatar" src="/uploads/avatars/<?php echo $user['avatar']; ?>" alt="avatar">
