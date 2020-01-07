@@ -23,7 +23,7 @@ commentForms.forEach(commentForm => {
                 return response.json();
             })
             .then(json => {
-                //display problems with the POST data
+                //display problems with invalid $_POST data
                 if (json.valid === false) {
                     window.alert(json.errors);
                 } else {

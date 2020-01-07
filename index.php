@@ -64,7 +64,7 @@
                                 </li>
                                 <!-- replies -->
                                 <div class="reply-buttons-container">
-                                    <button class="reply-button">reply/show X replies</button>
+                                    <button class="reply-button"><?php echo getReplyButtonText($pdo, $comment['id']); ?></button>
                                     <?php if (isYourComment($pdo, $_SESSION['user']['id'], $comment['id'])) : ?>
                                         <button>edit comment</button>
                                     <?php endif; ?>
