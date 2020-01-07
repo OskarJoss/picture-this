@@ -373,3 +373,31 @@ function getNumberOfComments(PDO $pdo, string $postId): string
 
     return $count;
 }
+
+/**
+ * Count number of replies on a comment and format to a string to be displayed on reply-button.
+ * returns 'reply', 'show 1 reply' or 'show X replies'.
+ *
+ * @param PDO $pdo
+ * @param string $commentId
+ * @return string
+ */
+function getReplyButtonText(PDO $pdo, string $commentId): string
+{
+    $statement = $pdo->prepare('SELECT count(*) FROM replies WHERE comment_id = :commentId');
+    pdoErrorInfo($pdo, $statement);
+
+    $statement->execute([
+        ':commentId' => $commentId
+    ]);
+
+    $numberOfReplies = intval($statement->fetch()[0]);
+
+    if ($numberOfReplies === 0) {
+        return 'reply';
+    } elseif ($numberOfReplies === 1) {
+        return 'show 1 reply';
+    } else {
+        return "show $numberOfReplies replies";
+    }
+}
