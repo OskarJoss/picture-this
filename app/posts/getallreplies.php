@@ -11,12 +11,13 @@ if (!isLoggedIn()) {
 header('Content-Type: application/json');
 
 if (isset($_POST['id'])) {
-    $postId = trim(filter_var($_POST['id'], FILTER_SANITIZE_STRING));
+    $commentId = trim(filter_var($_POST['id'], FILTER_SANITIZE_STRING));
+
     $valid = true;
 
-    if (!existsInDatabase($pdo, 'posts', 'id', $postId)) {
+    if (!existsInDatabase($pdo, 'comments', 'id', $commentId)) {
         $valid = false;
-        $errors = "post doesn't exist";
+        $errors = "comment doesn't exist";
         $response = [
             'valid' => $valid,
             'errors' => $errors
@@ -25,7 +26,7 @@ if (isset($_POST['id'])) {
         exit;
     }
 
-    $statement = $pdo->prepare('SELECT * FROM comments WHERE post_id = :postId ORDER BY date ASC');
+    $statement = $pdo->prepare('SELECT * FROM replies WHERE comment_id = :commentId ORDER BY date ASC');
     if (!$statement) {
         $valid = false;
         $errors = $pdo->errorInfo();
@@ -37,22 +38,23 @@ if (isset($_POST['id'])) {
         exit;
     }
 
+
     $statement->execute([
-        ':postId' => $postId
+        ':commentId' => $commentId
     ]);
 
-    $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $replies = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    //add username and avatar of commenter to each comment
-    for ($i = 0; $i < count($comments); $i++) {
-        $commenter = getUserById($pdo, $comments[$i]['user_id']);
-        $comments[$i]['avatar'] = $commenter['avatar'];
-        $comments[$i]['username'] = $commenter['username'];
+    //add username and avatar of replier to each reply
+    for ($i = 0; $i < count($replies); $i++) {
+        $replier = getUserById($pdo, $replies[$i]['user_id']);
+        $replies[$i]['avatar'] = $replier['avatar'];
+        $replies[$i]['username'] = $replier['username'];
     }
 
     $response = [
         'valid' => $valid,
-        'comments' => $comments
+        'replies' => $replies
     ];
 
     echo json_encode($response);
