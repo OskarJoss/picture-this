@@ -61,7 +61,16 @@ if (isset($_POST['comment'], $_POST['id'])) {
 
     //get last added comment and commenter for the json response
     $statement = $pdo->prepare('SELECT * FROM comments WHERE id = :id');
-    pdoErrorInfo($pdo, $statement);
+    if (!$statement) {
+        $valid = false;
+        $errors = $pdo->errorInfo();
+        $response = [
+            'valid' => $valid,
+            'errors' => $errors
+        ];
+        echo json_encode($response);
+        exit;
+    }
 
     $statement->execute([
         ':id' => $pdo->lastInsertId()

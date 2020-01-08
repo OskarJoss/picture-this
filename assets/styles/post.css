@@ -77,11 +77,11 @@
     font-size: 18px;
 }
 
-.comment .reply-buttons-container {
+.comment .show-replies-form {
     line-height: 1em;
 }
 
-.comment .reply-buttons-container button {
+.comment .show-replies-form button {
     margin: 0 5px;
     border: none;
     background-color: rgba(0, 0, 0, 0);

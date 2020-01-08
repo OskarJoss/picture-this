@@ -63,12 +63,13 @@
                                     <p><a href="/profile.php?id=<?php echo $comment['user_id']; ?>"><span><?php echo $commenter['username']; ?></span></a><?php echo $comment['comment']; ?></p>
                                 </li>
                                 <!-- replies -->
-                                <div class="reply-buttons-container">
-                                    <button class="reply-button"><?php echo getReplyButtonText($pdo, $comment['id']); ?></button>
+                                <form class="show-replies-form" action="app/posts/getallreplies.php" method="post">
+                                    <input type="hidden" name="id" value="<?php echo $comment['id'] ?>">
+                                    <button class="reply-button" type="submit"><?php echo getReplyButtonText($pdo, $comment['id']); ?></button>
                                     <?php if (isYourComment($pdo, $_SESSION['user']['id'], $comment['id'])) : ?>
                                         <button>edit comment</button>
                                     <?php endif; ?>
-                                </div>
+                                </form>
                                 <ul class="reply-list"></ul>
                                 <form class="reply-form" action="" method="post">
                                     <div class="avatar-container">
