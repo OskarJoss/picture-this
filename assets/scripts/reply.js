@@ -3,6 +3,15 @@
 const showRepliesForms = document.querySelectorAll(".show-replies-form");
 const replyForms = document.querySelectorAll(".reply-form");
 
+const createReplyTemplate = (userId, avatar, username, reply) => {
+    return `<a href="/profile.php?id=${userId}">
+    <div class="avatar-container">
+    <img class="avatar" src="/uploads/avatars/${avatar}" alt="avatar">
+    </div>
+    </a>
+    <p><a href="/profile.php?id=${userId}"><span>${username}</span></a>${reply}</p>`;
+};
+
 //show/hide all replies and the reply-form
 showRepliesForms.forEach(showRepliesForm => {
     showRepliesForm.addEventListener("submit", event => {
@@ -30,8 +39,17 @@ showRepliesForms.forEach(showRepliesForm => {
                     const replyList = event.target.parentElement.querySelector(
                         ".reply-list"
                     );
-                    json.replies.forEach(reply => {
-                        console.log(reply);
+                    json.replies.forEach(response => {
+                        const replyTemplate = createReplyTemplate(
+                            response.user_id,
+                            response.avatar,
+                            response.username,
+                            response.reply
+                        );
+                        const reply = document.createElement("li");
+                        reply.classList.add("reply");
+                        reply.innerHTML = replyTemplate;
+                        replyList.appendChild(reply);
                     });
                 }
             });
