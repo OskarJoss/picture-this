@@ -79,10 +79,13 @@ if (isset($_POST['id'], $_POST['reply'])) {
 
     $user = getUserById($pdo, $_SESSION['user']['id']);
 
+    //add user info to the response
+    $reply['username'] = $user['username'];
+    $reply['avatar'] = $user['avatar'];
+
     $response = [
         'valid' => $valid,
-        'reply' => $reply,
-        'user' => $user
+        'reply' => $reply
     ];
 
     echo json_encode($response);
