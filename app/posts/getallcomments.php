@@ -43,16 +43,21 @@ if (isset($_POST['id'])) {
 
     $comments = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-    //add username and avatar of commenter to each comment
+    //add username, avatar of commenter and nr of replies to each comment
     for ($i = 0; $i < count($comments); $i++) {
         $commenter = getUserById($pdo, $comments[$i]['user_id']);
         $comments[$i]['avatar'] = $commenter['avatar'];
         $comments[$i]['username'] = $commenter['username'];
+        $comments[$i]['buttonText'] = getReplyButtonText($pdo, $comments[$i]['id']);
     }
+
+    //add logged in user for the reply form
+    $loggedInUser = getUserById($pdo, $_SESSION['user']['id']);
 
     $response = [
         'valid' => $valid,
-        'comments' => $comments
+        'comments' => $comments,
+        'loggedInUser' => $loggedInUser
     ];
 
     echo json_encode($response);

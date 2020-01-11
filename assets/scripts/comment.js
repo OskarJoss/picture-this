@@ -1,6 +1,7 @@
 const commentForms = document.querySelectorAll(".comment-form");
 const showCommentsForms = document.querySelectorAll(".show-comments-form");
 
+//denna ska bort och hej ska döpas till detta
 const createCommentTemplate = (userId, avatar, username, comment) => {
     return `<a href="/profile.php?id=${userId}">
     <div class="avatar-container">
@@ -8,6 +9,37 @@ const createCommentTemplate = (userId, avatar, username, comment) => {
     </div>
     </a>
     <p><a href="/profile.php?id=${userId}"><span>${username}</span></a>${comment}</p>`;
+};
+
+const hej = (
+    userId,
+    avatar,
+    username,
+    comment,
+    commentId,
+    loggedInUserAvatar
+) => {
+    return `<li class="comment-container">
+                <a href="/profile.php?id=${userId}">
+                    <div class="avatar-container">
+                        <img class="avatar" src="/uploads/avatars/${avatar}" alt="avatar">
+                    </div>
+                </a>
+                <p><a href="/profile.php?id=${userId}"><span>${username}</span></a>${comment}</p>
+            </li>
+            <form class="show-replies-form" action="" method="post">
+                <input type="hidden" name="id" value="${commentId}">
+                <button class="reply-button" type="submit">reply</button>
+            </form>
+            <ul class="reply-list"></ul>
+            <form class="reply-form" action="" method="post">
+                <div class="avatar-container">
+                    <img class="avatar" src="/uploads/avatars/${loggedInUserAvatar}" alt="avatar">
+                </div>
+                <input type="hidden" name="id" value="${commentId}">
+                <textarea name="reply" cols="45" rows="1" maxlength="140" placeholder="reply..." required></textarea>
+                <button type="submit">Send</button>
+            </form>`;
 };
 
 //post the form data and append valid comment to the comment-list
@@ -82,19 +114,32 @@ showCommentsForms.forEach(showCommentsForm => {
                         //add all comments to the comment-list
                         commentList.innerHTML = "";
                         json.comments.forEach(response => {
-                            const comment = document.createElement("li");
+                            const comment = document.createElement("article");
                             comment.classList.add("comment");
-                            comment.innerHTML = createCommentTemplate(
+                            comment.innerHTML = hej(
                                 response.user_id,
                                 response.avatar,
                                 response.username,
-                                response.comment
+                                response.comment,
+                                response.id,
+                                json.loggedInUser.avatar
                             );
                             commentList.appendChild(comment);
+                            //add reply-button text to newly added comments
+                            const replyButton = comment.querySelector(
+                                ".show-replies-form .reply-button"
+                            );
+                            replyButton.textContent = response.buttonText;
                         });
                         //add active class and change button text
                         showCommentsButton.classList.add("active");
                         showCommentsButton.textContent = "Show Less";
+
+                        //activate the reply-buttons after more comments have been added
+                        let showRepliesForms = document.querySelectorAll(
+                            ".show-replies-form"
+                        );
+                        activateReplyButtons(showRepliesForms);
                     } else {
                         //remove all comments except the last 2
                         const comments = commentList.querySelectorAll(
