@@ -69,6 +69,9 @@ commentForms.forEach(commentForm => {
                         ".show-replies-form"
                     );
                     activateReplyButton(showRepliesForm);
+                    //activate the reply-form
+                    let replyForm = comment.querySelector(".reply-form");
+                    activateReplyForm(replyForm);
                     //empty the input field after comment is appended
                     const commentInput = commentForm.querySelector("textarea");
                     commentInput.value = "";
@@ -127,11 +130,16 @@ showCommentsForms.forEach(showCommentsForm => {
                                 ".show-replies-form .reply-button"
                             );
                             replyButton.textContent = response.buttonText;
-                            //activate the-reply button on comment
+                            //activate the reply-button on comment
                             let showRepliesForm = comment.querySelector(
                                 ".show-replies-form"
                             );
                             activateReplyButton(showRepliesForm);
+                            //activate the reply-form on comment
+                            let replyForm = comment.querySelector(
+                                ".reply-form"
+                            );
+                            activateReplyForm(replyForm);
                         });
                         //add active class and change button text
                         showCommentsButton.classList.add("active");
