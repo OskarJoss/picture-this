@@ -1,8 +1,5 @@
 "use_strict";
 
-// let showRepliesForms = document.querySelectorAll(".show-replies-form");
-// let replyForms = document.querySelectorAll(".reply-form");
-
 const createReplyTemplate = (userId, avatar, username, reply) => {
     return `<a href="/profile.php?id=${userId}">
     <div class="avatar-container">
@@ -22,8 +19,10 @@ const createReplyButtonText = numberOfReplies => {
     }
 };
 
-//from functions.js, activate the reply buttons
-activateReplyButtons(showRepliesForms);
+//Activate the reply buttons on initially visible comments
+showRepliesForms.forEach(showRepliesForm => {
+    activateReplyButton(showRepliesForm);
+});
 
 //create reply and append it to the reply-list
 replyForms.forEach(replyForm => {
