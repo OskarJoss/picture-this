@@ -1,17 +1,7 @@
 const commentForms = document.querySelectorAll(".comment-form");
 const showCommentsForms = document.querySelectorAll(".show-comments-form");
 
-//denna ska bort och hej ska döpas till detta
-const createCommentTemplate = (userId, avatar, username, comment) => {
-    return `<a href="/profile.php?id=${userId}">
-    <div class="avatar-container">
-    <img class="avatar" src="/uploads/avatars/${avatar}" alt="avatar">
-    </div>
-    </a>
-    <p><a href="/profile.php?id=${userId}"><span>${username}</span></a>${comment}</p>`;
-};
-
-const hej = (
+const createCommentTemplate = (
     userId,
     avatar,
     username,
@@ -69,9 +59,19 @@ commentForms.forEach(commentForm => {
                         json.comment.user_id,
                         json.user.avatar,
                         json.user.username,
-                        json.comment.comment
+                        json.comment.comment,
+                        json.comment.id,
+                        json.loggedInUser.avatar
                     );
                     commentList.appendChild(comment);
+                    //activate the reply-button
+                    let showRepliesForm = comment.querySelector(
+                        ".show-replies-form"
+                    );
+                    activateReplyButton(showRepliesForm);
+                    //activate the reply-form
+                    let replyForm = comment.querySelector(".reply-form");
+                    activateReplyForm(replyForm);
                     //empty the input field after comment is appended
                     const commentInput = commentForm.querySelector("textarea");
                     commentInput.value = "";
@@ -116,7 +116,7 @@ showCommentsForms.forEach(showCommentsForm => {
                         json.comments.forEach(response => {
                             const comment = document.createElement("article");
                             comment.classList.add("comment");
-                            comment.innerHTML = hej(
+                            comment.innerHTML = createCommentTemplate(
                                 response.user_id,
                                 response.avatar,
                                 response.username,
@@ -125,21 +125,25 @@ showCommentsForms.forEach(showCommentsForm => {
                                 json.loggedInUser.avatar
                             );
                             commentList.appendChild(comment);
-                            //add reply-button text to newly added comments
+                            //add reply-button text to comment
                             const replyButton = comment.querySelector(
                                 ".show-replies-form .reply-button"
                             );
                             replyButton.textContent = response.buttonText;
+                            //activate the reply-button on comment
+                            let showRepliesForm = comment.querySelector(
+                                ".show-replies-form"
+                            );
+                            activateReplyButton(showRepliesForm);
+                            //activate the reply-form on comment
+                            let replyForm = comment.querySelector(
+                                ".reply-form"
+                            );
+                            activateReplyForm(replyForm);
                         });
                         //add active class and change button text
                         showCommentsButton.classList.add("active");
                         showCommentsButton.textContent = "Show Less";
-
-                        //activate the reply-buttons after more comments have been added
-                        let showRepliesForms = document.querySelectorAll(
-                            ".show-replies-form"
-                        );
-                        activateReplyButtons(showRepliesForms);
                     } else {
                         //remove all comments except the last 2
                         const comments = commentList.querySelectorAll(

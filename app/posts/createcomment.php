@@ -80,10 +80,13 @@ if (isset($_POST['comment'], $_POST['id'])) {
 
     $user = getUserById($pdo, $_SESSION['user']['id']);
 
+    $loggedInUser = getUserById($pdo, $_SESSION['user']['id']);
+
     $response = [
         'valid' => $valid,
         'comment' => $comment,
-        'user' => $user
+        'user' => $user,
+        'loggedInUser' => $loggedInUser
     ];
 
     echo json_encode($response);
