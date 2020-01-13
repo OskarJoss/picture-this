@@ -54,6 +54,7 @@ if (isset($_POST['id'])) {
         ':postId' => $post['id']
     ]);
 
+    //delete post
     $statement = $pdo->prepare('DELETE FROM posts WHERE id = :postId');
     pdoErrorInfo($pdo, $statement);
 

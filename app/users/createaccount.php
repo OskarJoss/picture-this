@@ -46,14 +46,10 @@ if (
         ':password' => password_hash($password, PASSWORD_DEFAULT)
     ]);
 
-    $id = $pdo->lastInsertId();
     //login the user when account is created
-    $_SESSION['user'] = [
-        'id' => $id,
-        'full_name' => $fullName,
-        'username' => $username,
-        'email' => $email
-    ];
+    $id = $pdo->lastInsertId();
+    $_SESSION['user']['id'] = $id;
+    $_SESSION['greeting'] = "Welcome $username!";
 
     redirect('/');
 }
