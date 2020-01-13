@@ -4,7 +4,10 @@
 
 <?php if (isLoggedIn()) : ?>
 
-    <h1>Welcome <?php echo $_SESSION['user']['username']; ?></h1>
+    <?php if (isset($_SESSION['greeting'])) : ?>
+        <h1><?php echo $_SESSION['greeting']; ?></h1>
+        <?php unset($_SESSION['greeting']); ?>
+    <?php endif; ?>
 
     <?php $user = getUserById($pdo, $_SESSION['user']['id']); ?>
     <div class="wrapper">

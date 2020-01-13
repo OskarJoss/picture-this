@@ -27,9 +27,12 @@ if (isset($_POST['email'], $_POST['password'])) {
         redirect('/login.php');
     }
 
+    $username = $user['username'];
+
     if (password_verify($_POST['password'], $user['password']) === true) {
         unset($user['password']);
-        $_SESSION['user'] = $user;
+        $_SESSION['user']['id'] = $user['id'];
+        $_SESSION['greeting'] = "Welcome back $username!";
         redirect('/');
     }
 }
