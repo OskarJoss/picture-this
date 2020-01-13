@@ -31,8 +31,7 @@
                 </div>
                 <!-- likes -->
                 <div class="like-box">
-                    <!-- should I add method and action for clarity? -->
-                    <form class="like-form" action="">
+                    <form class="like-form" action="app/posts/likes.php">
                         <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
                         <button class="like-button" type="submit">
                             <?php echo isLikedBy($pdo, $_SESSION['user']['id'], $post['id']) ? "unlike" : "like"; ?>
