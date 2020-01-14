@@ -5,6 +5,7 @@ school assignment to build an Instagram clone in PHP and Javascript.
 1. Clone the repo
 2. Install PHP
 3. Navigate to the root in the terminal and open a php server on localhost:8000 (php -S localhost:8000)
+4. Open localhost:8000 in your browser.
 
 # Testers
 <a href="https://github.com/oaflindberg">Andreas Lindberg</a><br>
