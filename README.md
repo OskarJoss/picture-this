@@ -8,6 +8,7 @@ school assignment to build an Instagram clone in PHP and Javascript.
 
 # Testers
 <a href="https://github.com/oaflindberg">Andreas Lindberg</a>
+
 <a href="https://github.com/mikaelaalu">Mikaela Lundsgård</a>
 
 # Requirements
