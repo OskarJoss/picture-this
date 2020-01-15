@@ -1,3 +1,7 @@
+body {
+    background-color: #f8f8f8;
+}
+
 p {
     font-size: 16px;
 }
@@ -6,7 +10,6 @@ button {
     border: 1px solid black;
     height: 2em;
     font-size: 14px;
-    /* width: 100px; */
 
     margin: 10px 0;
 }
@@ -29,6 +32,7 @@ textarea {
 
 .wrapper {
     width: 100vw;
+    padding-top: 7vh;
 }
 
 .avatar-container .avatar {
@@ -50,4 +54,21 @@ textarea {
     position: absolute;
     background-color: green;
     color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+    .wrapper {
+        width: 40vw;
+        padding-top: 0;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }

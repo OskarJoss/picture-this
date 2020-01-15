@@ -35,12 +35,13 @@
                     <!-- user and date -->
                     <div class="user-container">
                         <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
-                            <div class="avatar-container">
-                                <img class="avatar" src="/uploads/avatars/<?php echo $post['avatar']; ?>" alt="avatar">
+                            <div class="avatar-username-container">
+                                <div class="avatar-container">
+                                    <img class="avatar" src="/uploads/avatars/<?php echo $post['avatar']; ?>" alt="avatar">
+                                </div>
+
+                                <h2 class="username"><?php echo $post['username']; ?></h2>
                             </div>
-                        </a>
-                        <a href="/profile.php?id=<?php echo $post['user_id']; ?>">
-                            <h2 class="username"><?php echo $post['username']; ?></h2>
                         </a>
                         <p><?php echo $post['date']; ?></p>
                     </div>

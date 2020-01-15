@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 .profile .user-info {
@@ -17,5 +16,5 @@
 }
 
 .profile .bio-container {
-    width: calc(100vw - 150px);
+    width: calc(100% - 150px);
 }
