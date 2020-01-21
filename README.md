@@ -62,3 +62,7 @@ As a user I'm able to reply to comments.
 10. You can rename echoErrorsAndMessages(); to something like displayErrorsAndMessages(); to make it more readable for someone not familiar with PHP and its syntax.
 
 11. This was super difficult to review! Great job!
+
+# Pull requests
+
+https://github.com/OskarJoss/picture-this/pull/34
