@@ -18,3 +18,20 @@
 .profile .bio-container {
     width: calc(100% - 150px);
 }
+
+.followers-container {
+    display: flex;
+    width: 100vw;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.followers {
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+}
+
+.followers p {
+    margin: auto;
+}
