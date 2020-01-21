@@ -401,3 +401,45 @@ function getReplyButtonText(PDO $pdo, string $commentId): string
         return "show $numberOfReplies replies";
     }
 }
+
+/**
+ * Check if user is following user profile you're watching
+ *
+ * @param pdo $pdo
+ * @param int $followedId
+ * @return void
+ */
+function checkFollow($pdo, $followedId)
+{
+    $statement = $pdo->prepare('SELECT * FROM follows where user_id_follows = :id AND user_id_followed = :follow');
+
+    $statement->execute([
+        ':id' => $_SESSION['user']['id'],
+        ':follow' => $followedId
+    ]);
+
+    $following = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $following;
+}
+
+
+function getFollowing($pdo, $userId)
+{
+    $statement = $pdo->prepare('SELECT COUNT(user_id_follows) FROM follows WHERE user_id_follows = :id');
+    $statement->execute([
+        ':id' => $userId
+    ]);
+    $following = $statement->fetch(PDO::FETCH_ASSOC);
+    return $following;
+}
+
+function getFollowers($pdo, $userId)
+{
+    $statement = $pdo->prepare('SELECT COUNT(user_id_followed) FROM follows WHERE user_id_followed = :id');
+    $statement->execute([
+        ':id' => $userId
+    ]);
+    $followers = $statement->fetch(PDO::FETCH_ASSOC);
+    return $followers;
+}

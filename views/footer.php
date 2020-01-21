@@ -8,6 +8,7 @@
 <script src="/assets/scripts/editpost.js"></script>
 <script src="/assets/scripts/comment.js"></script>
 <script src="/assets/scripts/reply.js"></script>
+<script src="/assets/scripts/search.js"></script>
 </body>
 
 </html>

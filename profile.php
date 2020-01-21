@@ -25,9 +25,25 @@
 
             <?php if (isYourProfile()) : ?>
                 <a href="/editprofile.php"><button>Edit Profile</button></a>
+                <!-- follow -->
             <?php else : ?>
-                <button>Follow</button>
+                <form action="app/users/follow.php" method="post">
+                    <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+                    <?php if (!checkFollow($pdo, $_GET['id'])) : ?>
+                        <button type="submit">Follow</button>
+                    <?php else : ?>
+                        <button type="submit">Unfollow</button>
+                    <?php endif; ?>
+                </form>
             <?php endif; ?>
+            <!-- end follow -->
+
+            <?php foreach (getFollowers($pdo, $_GET['id']) as $followers) : ?>
+                <p>Followers: <?php echo $followers; ?></p>
+            <?php endforeach; ?>
+            <?php foreach (getFollowing($pdo, $_GET['id']) as $following) : ?>
+                <p>Following: <?php echo $following; ?></p>
+            <?php endforeach; ?>
 
             <?php foreach (getPostsByUser($pdo, $_GET['id']) as $post) : ?>
 
