@@ -1,0 +1,10 @@
+.search-result {
+    list-style-type: none;
+    margin-left: -40px;
+}
+
+.search-avatar {
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+}

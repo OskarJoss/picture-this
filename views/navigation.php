@@ -7,6 +7,10 @@
         <?php if (isLoggedIn()) : ?>
 
             <li>
+                <a href="/search.php">Search</a>
+            </li>
+
+            <li>
                 <a href="/createpost.php">Create Post</a>
             </li>
 
