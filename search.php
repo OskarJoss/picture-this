@@ -4,7 +4,7 @@
     redirect('/');
 } ?>
 
-<h1>Search</h1>
+<h1>Search users</h1>
 <form action="app/users/search.php" method="post" class="form-section search">
     <input type="text" name="search" placeholder="John Doe">
 </form>
